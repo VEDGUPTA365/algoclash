@@ -9,7 +9,6 @@ import cors        from 'cors';
 import authRoutes       from './routes/authRoutes.js';
 import problemRoutes    from './routes/problemRoutes.js';
 import duelRoutes       from './routes/duelRoutes.js';
-import tournamentRoutes from './routes/tournamentRoutes.js';
 import markRoutes       from './routes/markRoutes.js';
 import aiRoutes         from './routes/aiRoutes.js';
 
@@ -35,7 +34,6 @@ app.use(express.json());
 app.use('/api/auth',        authRoutes);
 app.use('/api/problems',    problemRoutes);
 app.use('/api/duels',       duelRoutes);
-app.use('/api/tournaments', tournamentRoutes);
 app.use('/api/marks',       markRoutes);
 app.use('/api/ai',          aiRoutes);
 

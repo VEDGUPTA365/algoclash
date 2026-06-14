@@ -20,7 +20,6 @@ export default function Navbar() {
 
   const navLinks = [
     { to: '/',            label: 'Problems',    icon: Home,       show: !!user },
-    { to: '/tournaments', label: 'Tournaments', icon: Trophy,     show: !!user },
     { to: '/leaderboard', label: 'Leaderboard', icon: Trophy,     show: !!user },
     { to: '/admin',       label: 'Admin',       icon: ShieldCheck, show: user?.role === 'admin' },
   ];

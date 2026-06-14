@@ -1,10 +1,4 @@
 -- AlgoClash Database Schema
--- Run this file in your PostgreSQL terminal:
--- psql -U postgres -d algoclash -f schema.sql
-
--- Create Database (run separately if needed)
--- CREATE DATABASE algoclash;
-
 -- ─────────────────────────────────────────
 -- USERS TABLE
 -- ─────────────────────────────────────────
@@ -15,7 +9,6 @@ CREATE TABLE IF NOT EXISTS users (
   password   VARCHAR(255) NOT NULL,
   role       VARCHAR(10)  NOT NULL DEFAULT 'student' CHECK (role IN ('student', 'admin')),
   rating     INT DEFAULT 800,
-  tournament_points INT DEFAULT 0,
   created_at TIMESTAMP DEFAULT NOW()
 );
 
@@ -87,8 +80,7 @@ SELECT
   u.id,
   u.username,
   u.rating,
-  u.tournament_points,
-  COUNT(d.id)                                         AS total_duels,
+  COUNT(d.id)    AS total_duels,
   COUNT(CASE WHEN d.winner_id = u.id THEN 1 END)      AS wins,
   COUNT(CASE WHEN d.winner_id != u.id
              AND (d.player1_id = u.id OR d.player2_id = u.id)
@@ -108,7 +100,7 @@ FROM users u
 LEFT JOIN duels d
   ON (d.player1_id = u.id OR d.player2_id = u.id)
 WHERE u.role = 'student'
-GROUP BY u.id, u.username, u.rating, u.tournament_points
+GROUP BY u.id, u.username, u.rating
 ORDER BY u.rating DESC;
 
 -- ─────────────────────────────────────────
@@ -125,53 +117,7 @@ CREATE TABLE IF NOT EXISTS user_problem_status (
 
 CREATE INDEX IF NOT EXISTS idx_user_problem_status ON user_problem_status(user_id);
 
--- ─────────────────────────────────────────
--- TOURNAMENTS TABLE
--- ─────────────────────────────────────────
-CREATE TABLE IF NOT EXISTS tournaments (
-  id          SERIAL PRIMARY KEY,
-  name        VARCHAR(255) NOT NULL,
-  duration    INT NOT NULL,
-  status      VARCHAR(20) DEFAULT 'waiting' CHECK (status IN ('waiting', 'active', 'finished')),
-  join_code   VARCHAR(20) UNIQUE NOT NULL,
-  created_by  INT REFERENCES users(id) ON DELETE SET NULL,
-  start_time  TIMESTAMP,
-  created_at  TIMESTAMP DEFAULT NOW()
-);
-
--- ─────────────────────────────────────────
--- TOURNAMENT PROBLEMS TABLE
--- ─────────────────────────────────────────
-CREATE TABLE IF NOT EXISTS tournament_problems (
-  tournament_id INT NOT NULL REFERENCES tournaments(id) ON DELETE CASCADE,
-  problem_id    INT NOT NULL REFERENCES problems(id) ON DELETE CASCADE,
-  points        INT DEFAULT 100,
-  PRIMARY KEY (tournament_id, problem_id)
-);
-
--- ─────────────────────────────────────────
--- TOURNAMENT PLAYERS TABLE
--- ─────────────────────────────────────────
-CREATE TABLE IF NOT EXISTS tournament_players (
-  tournament_id INT NOT NULL REFERENCES tournaments(id) ON DELETE CASCADE,
-  user_id       INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  score         INT DEFAULT 0,
-  rank          INT,
-  PRIMARY KEY (tournament_id, user_id)
-);
-
--- ─────────────────────────────────────────
--- TOURNAMENT SUBMISSIONS TABLE
--- ─────────────────────────────────────────
-CREATE TABLE IF NOT EXISTS tournament_submissions (
-  id            SERIAL PRIMARY KEY,
-  tournament_id INT NOT NULL REFERENCES tournaments(id) ON DELETE CASCADE,
-  user_id       INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  problem_id    INT NOT NULL REFERENCES problems(id) ON DELETE CASCADE,
-  status        VARCHAR(20) DEFAULT 'pending' CHECK (status IN ('pending', 'accepted', 'wrong_answer', 'error')),
-  points_earned INT DEFAULT 0,
-  submitted_at  TIMESTAMP DEFAULT NOW()
-);
+-- (Tournaments tables removed)
 
 
 -- ─────────────────────────────────────────

@@ -9,8 +9,6 @@ import Leaderboard from './pages/Leaderboard.jsx';
 import Admin       from './pages/Admin.jsx';
 import Login       from './pages/Login.jsx';
 import Register    from './pages/Register.jsx';
-import Tournament  from './pages/Tournament.jsx';
-import TournamentRoom from './pages/TournamentRoom.jsx';
 
 // ─── Protected Route wrapper ─────────────────────────────────────────────────
 const Protected = ({ children }) => {
@@ -54,12 +52,7 @@ export default function App() {
         <Route path="/leaderboard" element={
           <Protected><Leaderboard /></Protected>
         } />
-        <Route path="/tournaments" element={
-          <Protected><Tournament /></Protected>
-        } />
-        <Route path="/tournaments/:id" element={
-          <Protected><TournamentRoom /></Protected>
-        } />
+
 
         {/* Admin */}
         <Route path="/admin" element={

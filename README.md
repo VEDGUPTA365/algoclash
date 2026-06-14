@@ -1,6 +1,6 @@
 # AlgoClash - Competitive Programming Platform
 
-AlgoClash is a feature-rich, real-time competitive programming platform designed for students and coding enthusiasts. Test your skills against friends in live 1v1 duels, climb the ELO-based leaderboard, compete in administrator-managed tournaments, and hone your skills with our built-in AI Tutor!
+AlgoClash is a feature-rich, real-time competitive programming platform designed for students and coding enthusiasts. Test your skills against friends in live 1v1 duels, climb the ELO-based leaderboard, and hone your skills with our built-in AI Tutor!
 
 ## 🚀 Features
 
@@ -13,12 +13,11 @@ AlgoClash is a feature-rich, real-time competitive programming platform designed
 ### AI Tutor (Powered by Gemini)
 - **Instant Code Analysis:** Stuck on a problem in practice mode? Click "Ask AI ✨" to instantly get a detailed breakdown of your code.
 - **Smart Hints & Solutions:** The AI will detect logical flaws, explain syntax errors, and provide a full, correct solution with an explanation in your chosen language.
-- **Cheat-Proof:** The AI tutor is strictly disabled during live Duels and Tournaments to maintain competitive integrity.
+- **Cheat-Proof:** The AI tutor is strictly disabled during live Duels to maintain competitive integrity.
 
-### Tournaments & Admin Controls
-- **Tournament Mode:** Administrators can create and manage live tournaments with multiple problems.
+### Admin Controls
 - **Problem Bank:** A vast collection of problems categorized by difficulty (Easy, Medium, Hard) and specific algorithmic tags (e.g., Dynamic Programming, Graphs, Math).
-- **Public/Private Visibility:** Admins can hide specific problems so they can be exclusively used for upcoming tournaments.
+- **Public/Private Visibility:** Admins can hide specific problems.
 
 ### Problem Solving Experience
 - **Integrated Code Editor:** Write code directly in the browser (supports C++, C, Python, JavaScript, Java, Go, and Rust).

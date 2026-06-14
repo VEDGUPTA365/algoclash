@@ -21,14 +21,11 @@ async function seedUsers() {
     const wins = Math.floor(Math.random() * 50);
     const losses = Math.floor(Math.random() * 50);
     
-    // Generate random tournament points
-    const tournamentPoints = Math.floor(Math.random() * 500);
-
     try {
       await pool.query(
-        `INSERT INTO users (username, email, password, rating, tournament_points) 
-         VALUES ($1, $2, $3, $4, $5)`,
-        [username, email, passwordHash, rating, tournamentPoints]
+        `INSERT INTO users (username, email, password, rating) 
+         VALUES ($1, $2, $3, $4)`,
+        [username, email, passwordHash, rating]
       );
       console.log(`Created user: ${username} | Rating: ${rating}`);
     } catch (err) {

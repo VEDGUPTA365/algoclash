@@ -133,7 +133,6 @@ export default function Admin() {
   const tabs = [
     { key: 'manual', label: '+ Add Problem'                    },
     { key: 'list',   label: `📋 Problems (${problems.length})` },
-    { key: 'tourneys', label: `🏆 Tournaments` },
   ];
 
   return (
@@ -473,110 +472,7 @@ export default function Admin() {
         </div>
       )}
 
-      {/* ── TOURNAMENTS ────────────────────────────────────────────────────── */}
-      {activeTab === 'tourneys' && (
-        <div className="rounded-2xl p-6 border"
-             style={{ backgroundColor: '#1e293b', borderColor: '#334155' }}>
-          <h2 className="text-lg font-semibold text-white mb-5">Create Tournament</h2>
-          
-          <div className="space-y-5">
-            <div>
-              <label className="block text-sm font-medium mb-1.5" style={{ color: '#94a3b8' }}>
-                Tournament Name *
-              </label>
-              <input
-                type="text"
-                id="tourneyName"
-                placeholder="e.g. Weekly Code Clash #5"
-                className="w-full px-4 py-2.5 rounded-lg text-sm outline-none transition-all"
-                style={inputStyle}
-                onFocus={e => e.target.style.borderColor = '#6366f1'}
-                onBlur={e  => e.target.style.borderColor = '#334155'}
-              />
-            </div>
-            
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium mb-1.5" style={{ color: '#94a3b8' }}>
-                  Duration (minutes) *
-                </label>
-                <input
-                  type="number"
-                  id="tourneyDuration"
-                  defaultValue={120}
-                  className="w-full px-4 py-2.5 rounded-lg text-sm outline-none transition-all"
-                  style={inputStyle}
-                  onFocus={e => e.target.style.borderColor = '#6366f1'}
-                  onBlur={e  => e.target.style.borderColor = '#334155'}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1.5" style={{ color: '#94a3b8' }}>
-                  Join Code *
-                </label>
-                <input
-                  type="text"
-                  id="tourneyJoinCode"
-                  placeholder="e.g. CLASH5"
-                  className="w-full px-4 py-2.5 rounded-lg text-sm outline-none transition-all uppercase"
-                  style={inputStyle}
-                  onFocus={e => e.target.style.borderColor = '#6366f1'}
-                  onBlur={e  => e.target.style.borderColor = '#334155'}
-                />
-              </div>
-            </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-1.5" style={{ color: '#94a3b8' }}>
-                Select Problems *
-              </label>
-              <div className="max-h-60 overflow-y-auto rounded-lg border p-2 space-y-1" style={{ borderColor: '#334155', backgroundColor: '#0f172a' }}>
-                {problems.map(p => (
-                  <label key={p.id} className="flex items-center gap-3 p-2 rounded hover:bg-slate-800 cursor-pointer transition-colors">
-                    <input type="checkbox" className="accent-indigo-500 w-4 h-4 tourney-problem-cb" value={p.id} />
-                    <span className="text-sm text-white flex-1">{p.title}</span>
-                    <span className="text-xs px-2 py-0.5 rounded-full"
-                          style={{
-                            color:           p.difficulty === 'Easy' ? '#4ade80' : p.difficulty === 'Hard' ? '#f87171' : '#fb923c',
-                            backgroundColor: p.difficulty === 'Easy' ? '#052e16' : p.difficulty === 'Hard' ? '#450a0a' : '#431407',
-                          }}>
-                      {p.difficulty}
-                    </span>
-                    <span className="text-xs text-slate-500">{p.is_public ? 'Public' : 'Private'}</span>
-                  </label>
-                ))}
-                {problems.length === 0 && <p className="text-sm text-slate-500 p-2">No problems available.</p>}
-              </div>
-            </div>
-
-            <button
-              onClick={async () => {
-                const name = document.getElementById('tourneyName').value;
-                const duration = document.getElementById('tourneyDuration').value;
-                const joinCode = document.getElementById('tourneyJoinCode').value;
-                const selected = Array.from(document.querySelectorAll('.tourney-problem-cb:checked')).map(cb => ({ id: cb.value, points: 100 }));
-                
-                if (!name || !duration || !joinCode || selected.length === 0) {
-                  return alert('All fields and at least 1 problem are required');
-                }
-                
-                try {
-                  await api.post('/tournaments', { name, duration, joinCode, problems: selected });
-                  alert('Tournament created! Go to the home page to see it.');
-                  document.getElementById('tourneyName').value = '';
-                  document.getElementById('tourneyJoinCode').value = '';
-                  document.querySelectorAll('.tourney-problem-cb').forEach(cb => cb.checked = false);
-                } catch (e) {
-                  alert(e.response?.data?.message || 'Failed to create');
-                }
-              }}
-              className="w-full py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all"
-              style={{ backgroundColor: '#6366f1', color: 'white' }}>
-              <Plus size={16} /> Create Tournament
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
