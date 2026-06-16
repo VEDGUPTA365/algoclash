@@ -4,3 +4,9 @@ node_modules/
 dist/
 build/
 *.log
+*.zip
+ved/
+dewansh/
+kunal/
+temp_zips/
+temp_backup_dir/
