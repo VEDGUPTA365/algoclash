@@ -1,0 +1,12 @@
+node_modules/
+.env
+.DS_Store
+dist/
+build/
+*.log
+*.zip
+ved/
+dewansh/
+kunal/
+temp_zips/
+temp_backup_dir/
